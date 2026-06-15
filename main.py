@@ -133,42 +133,61 @@ def menu_condicionales_anidados():
     """Sección 4: condicionales anidados."""
     print("\n--- Condicionales anidados ---")
 
-    # TODO: descomenta cuando hayas completado clasificar_mora
-    # casos = [(0, 0), (15, 800_000), (15, 200_000)]
-    # for dias, valor in casos:
-    #     clasificacion = clasificar_mora(dias, valor)
-    #     print(f"  {dias} días / ${valor:,} → {clasificacion}")
+    #descomenta cuando hayas completado clasificar_mora
+    casos = [(0, 0), (15, 800_000), (15, 200_000)]
+    for dias, valor in casos:
+        clasificacion = clasificar_mora(dias, valor)
+        print(f"  {dias} días / ${valor:,} → {clasificacion}")
 
-    # TODO: descomenta cuando hayas completado determinar_tipo_seguimiento
-    # registros_prueba = [
-    #     ("ACTIVO", 2_500_000, "Bogota"),
-    #     ("ACTIVO", 500_000, "Cali"),
-    #     ("PENDIENTE", 1_000_000, "Medellin"),
-    #     ("INACTIVO", 0, "Barranquilla"),
-    # ]
-    # for estado, valor, mun in registros_prueba:
-    #     tipo = determinar_tipo_seguimiento(estado, valor, mun)
-    #     print(f"  {estado} / ${valor:,} / {mun} → {tipo}")
-    pass
+    #descomenta cuando hayas completado determinar_tipo_seguimiento
+    registros_prueba = [
+    ("ACTIVO", 2_500_000, "Bogota"),
+    ("ACTIVO", 500_000, "Cali"),
+    ("PENDIENTE", 1_000_000, "Medellin"),
+    ("INACTIVO", 0, "Barranquilla"),
+    ("ACTIVO", 3_000_000, "Bogota"),
+    ]
+    for estado, valor, mun in registros_prueba:
+        tipo = determinar_tipo_seguimiento(estado, valor, mun)
+        print(f"  {estado} / ${valor:,} / {mun} → {tipo}")
+    #pass
 
 
 def menu_condicionales_encadenados():
     """Sección 5: condicionales encadenados."""
     print("\n--- Condicionales encadenados ---")
 
-    # TODO: descomenta cuando hayas completado clasificar_contribuyente
-    # valores = [0, 50_000, 500_000, 2_000_000, 6_000_000]
-    # for valor in valores:
-    #     categoria = clasificar_contribuyente(valor)
-    #     print(f"  ${valor:,} → {categoria}")
+    # descomenta cuando hayas completado clasificar_contribuyente
+    valores = [0, 50_000, 500_000, 2_000_000, 6_000_000, 1_000_000]
+    for valor in valores:
+        categoria = clasificar_contribuyente(valor)
+        print(f"  ${valor:,} → {categoria}")
 
-    # TODO: descomenta cuando hayas completado calcular_sancion_basica
-    # dias_prueba = [0, 15, 45, 75, 120]
-    # valor_base = 1_000_000
-    # for dias in dias_prueba:
-    #     sancion = calcular_sancion_basica(dias, valor_base)
-    #     print(f"  {dias} días de mora → sanción: ${sancion:,.0f}")
-    pass
+    #descomenta cuando hayas completado calcular_sancion_basica
+    dias_prueba = [0, 15, 45, 75, 120]
+    valor_base = 1_000_000
+    for dias in dias_prueba:
+        sancion = calcular_sancion_basica(dias, valor_base)
+        print(f"  {dias} días de mora → sanción: ${sancion:,.0f}")
+    
+    # Lista de casos de prueba: (valor, dias_mora, tipo_contribuyente)
+    casos_cobro = [
+        (6_000_000, 75, "GRANDE"),    
+        (2_000_000, 45, "GRANDE"),    
+        (5_000_000, 90, "MEDIANO"),   
+        (500_000, 15, "GRANDE"),      
+        (300_000, 40, "PEQUEÑO"),     
+        (50_000, 10, "PEQUEÑO")       
+    ]
+    
+    # Recorremos los casos para probar tu función de utils.py
+    for valor, dias, tipo in casos_cobro:
+        # Llamamos a tu función pasándole los 3 parámetros
+        prioridad = priorizar_cobro(valor, dias, tipo)
+        
+        # Imprimimos de forma organizada para validar el resultado
+        print(f"  Contribuyente: {tipo:<8} | Mora: {dias:<2} días | Valor: ${valor:<9,} → Prioridad: {prioridad}")
+    #pass
 
 
 def menu_ciclos_for():

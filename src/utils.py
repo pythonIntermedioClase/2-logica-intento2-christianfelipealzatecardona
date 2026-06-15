@@ -464,16 +464,14 @@ def clasificar_mora(dias_mora, valor):
     Returns:
         str: "Mora alta", "Mora baja" o "Sin mora".
     """
-    # TODO:
-    # 1. Escribe el if externo: si dias_mora > 0 (hay mora)
-    #    - Dentro, escribe el if interno: si valor > 500_000
-    #      retorna "Mora alta"
-    #    - else (valor no supera 500_000):
-    #      retorna "Mora baja"
-    # 2. else (no hay mora):
-    #    retorna "Sin mora"
-    pass
-
+    # :
+    if dias_mora > 0:# 1. Escribe el if externo: si dias_mora > 0 (hay mora)
+        if valor > 500_000:#    - Dentro, escribe el if interno: si valor > 500_000
+            return  "Mora alta" #retorna "Mora alta"
+        else: #else (valor no supera 500_000):
+            return "Mora baja" #retorna "Mora baja"
+    else:
+        return "Sin Mora" #retorna "Sin mora"
 
 def determinar_tipo_seguimiento(estado, valor, municipio):
     """
@@ -487,16 +485,20 @@ def determinar_tipo_seguimiento(estado, valor, municipio):
     Returns:
         str: Tipo de seguimiento asignado.
     """
-    # TODO:
-    # 1. Si estado == "ACTIVO":
-    #    - Calcula si el municipio es prioritario:
-    #      municipio_prioritario = municipio == "Bogota" or municipio == "Medellin"
-    #    - Calcula si el valor es alto: valor_alto = valor > 2_000_000
-    #    - Si municipio_prioritario AND valor_alto: retorna "Seguimiento prioritario"
-    #    - De lo contrario: retorna "Seguimiento estándar"
-    # 2. elif estado == "PENDIENTE": retorna "Seguimiento urgente"
-    # 3. else: retorna "Sin seguimiento"
-    pass
+    #
+    if estado == "ACTIVO":# 1. Si estado == "ACTIVO"         
+        #municipio_prioritario = municipio in ["Bogota", "Medellin", "Bogotá", "Medellín"]
+        municipio_prioritario = municipio == "Bogota" or municipio == "Medellin" #    - Calcula si el municipio es prioritario:
+        valor_alto = valor > 2_000_000 #- Calcula si el valor es alto: valor_alto = valor > 2_000_000
+        if municipio_prioritario and valor_alto: # - Si municipio_prioritario AND valor_alto: 
+            return "Seguimiento prioritario" # retorna "Seguimiento prioritario"
+        else:
+            return "Seguimiento estándar"   #    - De lo contrario: retorna 
+    elif estado == "PENDIENTE":
+        return "Seguimiento urgente" # 2. elif estado == "PENDIENTE": retorna "Seguimiento urgente"
+    else:
+        return "Sin seguimiento" # 3. else: retorna "Sin seguimiento"
+
 
 
 def evaluar_cumplimiento(estado, valor, dias_mora, historial):
@@ -513,22 +515,32 @@ def evaluar_cumplimiento(estado, valor, dias_mora, historial):
         str: "Cumplimiento total", "Incumplimiento leve",
              "Incumplimiento grave" o "Caso crítico".
     """
-    # TODO:
+    # :
     # Usa una serie de if independientes (no anidados entre sí):
     #
     # 1. Si estado == "ACTIVO" AND dias_mora == 0:
     #    retorna "Cumplimiento total"
-    #
+    if estado == "ACTIVO" and dias_mora == 0:
+        return "Cumplimiento total"
     # 2. Si estado == "ACTIVO" AND dias_mora > 0:
     #    - Si dias_mora <= 30 AND NOT historial: retorna "Incumplimiento leve"
     #    - De lo contrario: retorna "Incumplimiento grave"
-    #
+    if estado == "ACTIVO" and dias_mora > 0:
+        if dias_mora <= 30 and not historial:
+            return "Incumplimiento leve"
+        else:
+            return "Incumplimiento grave"
     # 3. Si estado == "PENDIENTE" OR estado == "SUSPENDIDO":
     #    - Si historial AND valor > 1_000_000: retorna "Caso crítico"
     #    - De lo contrario: retorna "Incumplimiento grave"
-    #
+    if estado == "PENDIENTE" or estado == "SUSPENDIDO":
+        if historial and valor > 1_000_000:
+            return "Caso crítico"
+        else:
+            return "Incumplimiento grave"
+            
     # 4. Para cualquier otro caso: retorna "Incumplimiento leve"
-    pass
+    return "Incumplimiento leve"
 
 
 # ---------------------------------------------------------------------------
@@ -552,7 +564,7 @@ def clasificar_contribuyente(valor):
     Returns:
         str: Categoría del contribuyente.
     """
-    # TODO:
+    # :
     # Escribe un bloque if/elif/elif/elif/else con las condiciones en
     # orden de mayor a menor (primero la más restrictiva):
     # - si valor > 5_000_000: retorna "GRANDE"
@@ -560,7 +572,16 @@ def clasificar_contribuyente(valor):
     # - elif valor > 100_000: retorna "PEQUEÑO"
     # - elif valor > 0: retorna "MÍNIMO"
     # - else: retorna "SIN VALOR"
-    pass
+    if valor > 5_000_000:
+        return "GRANDE"       
+    elif valor > 1_000_000:
+        return "MEDIANO"       
+    elif valor > 100_000:
+        return "PEQUEÑO"       
+    elif valor > 0:
+        return "MÍNIMO"        
+    else:
+        return "SIN VALOR"     
 
 
 def describir_periodo(periodo):
@@ -616,7 +637,7 @@ def calcular_sancion_basica(dias_mora, valor_base):
         calcular_sancion_basica(15, 1_000_000)   -> 10000.0
         calcular_sancion_basica(100, 1_000_000)  -> 100000.0
     """
-    # TODO:
+    # 
     # 1. Usa if/elif/elif/elif/else para asignar la tasa según dias_mora:
     #    - si dias_mora == 0: tasa = 0.0
     #    - elif dias_mora <= 30: tasa = 0.01
@@ -625,8 +646,16 @@ def calcular_sancion_basica(dias_mora, valor_base):
     #    - else: tasa = 0.10
     # 2. Calcula: sancion = valor_base * tasa
     # 3. Retorna sancion.
-    pass
-
+    if dias_mora == 0:
+        tasa = 0.0
+    elif dias_mora <= 30:
+        tasa = 0.01
+    elif dias_mora <= 60:
+        tasa = 0.05
+    else: 
+        tasa = 0.10
+    sancion = valor_base * tasa
+    return sancion
 
 def priorizar_cobro(valor, dias_mora, tipo_contribuyente):
     """
@@ -640,7 +669,7 @@ def priorizar_cobro(valor, dias_mora, tipo_contribuyente):
     Returns:
         str: Prioridad de cobro ("P1", "P2", "P3", "P4" o "P5").
     """
-    # TODO:
+    # :
     # 1. Calcula variables de apoyo antes del if/elif:
     #    mora_alta = dias_mora > 60
     #    mora_media = dias_mora > 30 and dias_mora <= 60
@@ -650,9 +679,19 @@ def priorizar_cobro(valor, dias_mora, tipo_contribuyente):
     #    los casos más graves (GRANDE + mora_alta) van primero → P1
     #    los casos menos urgentes van al final → P5
     # 3. El else final retorna "P5".
-    pass
-
-
+    mora_alta = dias_mora > 60
+    mora_media = dias_mora > 30 and dias_mora <= 60
+    valor_alto = valor > 1_000_000
+    if tipo_contribuyente =='GRANDE' and mora_alta: # P1: La combinación más crítica (Gran contribuyente con mora alta)
+        return "P1"
+    elif (tipo_contribuyente == "GRANDE" and mora_media) or (valor_alto and mora_alta): # P2: Casos muy graves (Gran contribuyente con mora media OR cualquier valor alto con mora alta)
+        return "P2"
+    elif (tipo_contribuyente == "MEDIANO" and mora_alta) or (tipo_contribuyente == "GRANDE"): # P3: Casos moderados (Medianos con mora alta OR Grandes con mora baja)
+        return "P3"
+    elif mora_media or tipo_contribuyente == "PEQUEÑO" and mora_alta: # P4: Casos leves (Cualquiera con mora media, o pequeños con mora alta)
+        return "P4"
+    else:
+        return "P5" # "P5" para los casos sin riesgo o mínimos
 # ---------------------------------------------------------------------------
 # CICLOS FOR
 # ---------------------------------------------------------------------------
