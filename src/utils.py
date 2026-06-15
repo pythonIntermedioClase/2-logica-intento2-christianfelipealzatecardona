@@ -364,7 +364,6 @@ def pipeline_nit(nit):
 # ---------------------------------------------------------------------------
 # CONDICIONALES SIMPLES
 # ---------------------------------------------------------------------------
-
 def esta_al_dia(dias_mora):
     """
     Determina si un contribuyente está al día en sus pagos.
@@ -374,17 +373,16 @@ def esta_al_dia(dias_mora):
 
     Returns:
         bool: True si dias_mora es 0, False en cualquier otro caso.
-
-    Ejemplos:
-        esta_al_dia(0)   -> True
-        esta_al_dia(1)   -> False
-        esta_al_dia(30)  -> False
     """
-    # TODO:
     # 1. Escribe un if/else:
     #    - si dias_mora == 0: retorna True
     #    - de lo contrario: retorna False
-    pass
+    if dias_mora == 0:
+        return True  # 
+    else:
+        return False  # 
+
+    
 
 
 def aplicar_descuento(valor, pago_voluntario):
@@ -402,14 +400,21 @@ def aplicar_descuento(valor, pago_voluntario):
         aplicar_descuento(1_000_000, True)   -> 900000.0
         aplicar_descuento(1_000_000, False)  -> 1000000
     """
-    # TODO:
+    # :
+    if pago_voluntario==True:
+        descuento = valor * 0.10
+        valor_con_descuento = valor - descuento
+        return valor_con_descuento
+    else:
+        return valor
+        
     # 1. Si pago_voluntario es True:
     #    - Calcula el descuento: descuento = valor * 0.10
     #    - Calcula el valor final: valor_con_descuento = valor - descuento
     #    - Retorna valor_con_descuento
     # 2. Si pago_voluntario es False:
     #    - Retorna valor sin modificar
-    pass
+    
 
 
 def asignar_prioridad(valor, tiene_historial_incumplimiento):
@@ -428,15 +433,18 @@ def asignar_prioridad(valor, tiene_historial_incumplimiento):
     Returns:
         str: "ALTA", "MEDIA" o "BAJA".
     """
-    # TODO:
+    # :
     # 1. Evalúa las dos condiciones por separado y guárdalas en variables:
-    #    valor_alto = valor > 1_000_000
-    #    tiene_historial = tiene_historial_incumplimiento
+    valor_alto = valor > 1_000_000
+    tiene_historial = tiene_historial_incumplimiento
     # 2. Escribe un if/elif/else:
-    #    - si valor_alto AND tiene_historial: retorna "ALTA"
-    #    - si valor_alto OR tiene_historial: retorna "MEDIA"
-    #    - de lo contrario: retorna "BAJA"
-    pass
+    if valor_alto and tiene_historial: 
+        return "ALTA" # si valor_alto AND tiene_historial: retorna "ALTA"
+    elif valor_alto or tiene_historial:
+        return "MEDIA" #"si valor_alto OR tiene_historial: retorna "MEDIA"
+    else:
+        return "BAJA" # lo contrario: retorna "BAJA"
+
 
 
 # ---------------------------------------------------------------------------
