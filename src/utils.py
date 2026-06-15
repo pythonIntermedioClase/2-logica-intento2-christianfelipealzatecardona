@@ -233,19 +233,21 @@ def limpiar_nit(nit):
         limpiar_nit("900.123.456")  -> "900123456"
         limpiar_nit("900123456")    -> "900123456"
     """
-    # TODO:
+    
     # 1. Elimina los guiones del nit con .replace("-", "") y guarda el
     #    resultado en una variable llamada sin_guiones.
+    sin_guiones = nit.replace("-", "")
     # 2. Elimina los puntos de sin_guiones con .replace(".", "") y guarda
     #    el resultado en una variable llamada sin_puntos.
+    sin_puntos = sin_guiones.replace(".", "")
     # 3. Retorna sin_puntos.
-    pass
+    return sin_puntos
+    #pass
 
 
 def validar_nit(nit):
     """
     Valida que un NIT tenga el formato correcto.
-
     Limpia el NIT antes de validar. Un NIT válido contiene solo
     dígitos y tiene entre 9 y 10 caracteres.
 
@@ -261,14 +263,17 @@ def validar_nit(nit):
         validar_nit("ABC123")       -> False
         validar_nit("123")          -> False
     """
-    # TODO:
+    #:
     # 1. Llama a limpiar_nit(nit) y guarda el resultado en nit_limpio.
+    nit_limpio=limpiar_nit(nit)
     # 2. Verifica que nit_limpio solo tenga dígitos con .isdigit() y
     #    guarda el resultado (True/False) en solo_digitos.
+    solo_digitos = nit_limpio.isdigit()
     # 3. Verifica que la longitud sea válida:
-    #    longitud_valida = len(nit_limpio) >= 9 and len(nit_limpio) <= 10
-    # 4. Retorna solo_digitos and longitud_valida.
-    pass
+    longitud_valida = len(nit_limpio) >= 9 and len(nit_limpio) <= 10
+    # 4. Retorna solo_digitos and longitud_valida.    
+    return solo_digitos and longitud_valida
+    #pass
 
 
 def normalizar_texto(texto):
@@ -288,13 +293,14 @@ def normalizar_texto(texto):
         normalizar_texto("  bogotá d.c.  ")  -> "BOGOTÁ D.C."
         normalizar_texto("  empresa  abc  ") -> "EMPRESA ABC"
     """
-    # TODO:
+    # 
     # Encadena tres métodos en una sola expresión y retorna el resultado:
     # 1. texto.strip()           elimina espacios al inicio y al final
     # 2. .upper()                convierte a mayúsculas
     # 3. .replace("  ", " ")     elimina espacios dobles internos
     # Retorna todo en una sola línea: return texto.strip().upper().replace(...)
-    pass
+    #pass
+    return texto.strip().upper().replace("  ", " ")
 
 
 def procesar_nit(nit):
@@ -311,15 +317,17 @@ def procesar_nit(nit):
         procesar_nit("900-123-456")  -> "NIT 900123456: válido"
         procesar_nit("ABC-123")      -> "NIT ABC-123: INVÁLIDO"
     """
-    # TODO:
-    # 1. Llama a limpiar_nit(nit) y guarda el resultado en nit_limpio.
+    #
+    nit_limpio=limpiar_nit(nit) # 1. Llama a limpiar_nit(nit) y guarda el resultado en nit_limpio.
     # 2. Llama a validar_nit(nit_limpio) y guarda el resultado en es_valido.
+    es_valido=validar_nit(nit_limpio)  
     # 3. Si es_valido es True:
-    #    mensaje = f"NIT {nit_limpio}: válido"
-    # 4. Si es_valido es False:
-    #    mensaje = f"NIT {nit}: INVÁLIDO"
-    # 5. Retorna mensaje.
-    pass
+    if es_valido:
+        mensaje = f"NIT {nit_limpio}: válido"    
+    else:# 4. Si es_valido es False:
+        mensaje = f"NIT {nit}: INVÁLIDO"    
+    return mensaje# 5. Retorna mensaje.
+    #pass
 
 
 def pipeline_nit(nit):
@@ -337,15 +345,20 @@ def pipeline_nit(nit):
         pipeline_nit("900-123-456")  -> "NIT 900123456 — apto para procesamiento"
         pipeline_nit("ABC-123")      -> "NIT ABC-123 — rechazado: formato inválido"
     """
-    # TODO:
+    # 
     # 1. Llama a limpiar_nit(nit) y guarda el resultado en nit_limpio.
+    nit_limpio=limpiar_nit(nit)
     # 2. Llama a validar_nit(nit_limpio) y guarda el resultado en es_valido.
+    es_valido=validar_nit(nit_limpio)
     # 3. Si es_valido es True:
-    #    informe = f"NIT {nit_limpio} — apto para procesamiento"
+    if es_valido==True:
+        informe = f"NIT {nit_limpio} — apto para procesamiento"
     # 4. Si es_valido es False:
-    #    informe = f"NIT {nit} — rechazado: formato inválido"
+    else:
+        informe = f"NIT {nit} — rechazado: formato inválido"
     # 5. Retorna informe.
-    pass
+    return informe  
+    #pass
 
 
 # ---------------------------------------------------------------------------
