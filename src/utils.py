@@ -542,7 +542,48 @@ def evaluar_cumplimiento(estado, valor, dias_mora, historial):
     # 4. Para cualquier otro caso: retorna "Incumplimiento leve"
     return "Incumplimiento leve"
 
+def evaluar_riesgo_tributario(valor, dias_mora, tiene_historial):
+    """
+    Evalúa el nivel de riesgo tributario de un contribuyente basado en el monto,
+    los días de retraso en sus obligaciones y sus antecedentes de cumplimiento.
 
+    Args:
+        valor (float): Monto total de la obligación declarada.
+        dias_mora (int): Cantidad de días de retraso en el pago.
+        tiene_historial (bool): True si registra incumplimientos previos.
+
+    Returns:
+        str: Categoría de riesgo ("CRÍTICO", "ALTO", "MEDIO", "BAJO").
+
+    Ejemplos:
+        evaluar_riesgo_tributario(4_000_000, 75, True)   -> "CRÍTICO"
+        evaluar_riesgo_tributario(1_500_000, 45, True)   -> "ALTO"
+        evaluar_riesgo_tributario(500_000, 15, False)    -> "MEDIO"
+        evaluar_riesgo_tributario(100_000, 0, False)     -> "BAJO"
+    """
+    # 1. Variables de apoyo lógicas
+    mora_prolongada = dias_mora > 60
+    mora_moderada = 0 < dias_mora <= 60
+    valor_alto = valor > 3_000_000
+    valor_medio = valor > 1_000_000
+
+    # 2. Evaluación jerárquica de riesgos (Filtros de arriba hacia abajo)
+    
+    # CRÍTICO: Deuda alta y mucha mora acumulada
+    if valor_alto and mora_prolongada:
+        return "CRÍTICO"
+        
+    # ALTO: Mora prolongada en cualquier monto, o historial con deuda representativa
+    elif mora_prolongada or (tiene_historial and valor_medio):
+        return "ALTO"
+        
+    # MEDIO: Mora moderada en general o antecedentes de incumplimiento activos
+    elif mora_moderada or tiene_historial:
+        return "MEDIO"
+        
+    # BAJO: El resto de casos (mora en 0 y sin historial)
+    else:
+        return "BAJO"
 # ---------------------------------------------------------------------------
 # CONDICIONALES ENCADENADOS
 # ---------------------------------------------------------------------------
@@ -692,6 +733,8 @@ def priorizar_cobro(valor, dias_mora, tipo_contribuyente):
         return "P4"
     else:
         return "P5" # "P5" para los casos sin riesgo o mínimos
+
+
 # ---------------------------------------------------------------------------
 # CICLOS FOR
 # ---------------------------------------------------------------------------

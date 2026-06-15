@@ -32,6 +32,7 @@ from src.utils import asignar_prioridad
 from src.utils import clasificar_mora
 from src.utils import determinar_tipo_seguimiento
 from src.utils import evaluar_cumplimiento
+from src.utils import evaluar_riesgo_tributario
 
 from src.utils import clasificar_contribuyente
 from src.utils import describir_periodo
@@ -188,7 +189,20 @@ def menu_condicionales_encadenados():
         # Imprimimos de forma organizada para validar el resultado
         print(f"  Contribuyente: {tipo:<8} | Mora: {dias:<2} días | Valor: ${valor:<9,} → Prioridad: {prioridad}")
     #pass
+    print("\n--- Ejercicio Libre: Evaluación de Riesgo Tributario ---")
+    # Matriz de prueba: (valor, dias_mora, tiene_historial)
+    casos_riesgo = [
+        (4_500_000, 70, True),   # Cumple filtro CRÍTICO
+        (500_000, 90, False),    # Cae en ALTO (mora prolongada)
+        (2_000_000, 0, True),    # Cae en ALTO (historial + valor medio)
+        (300_000, 25, False),    # Cae en MEDIO (mora moderada)
+        (0, 0, True),            # Cae en MEDIO (sólo por el historial)
+        (150_000, 0, False)      # Cae en BAJO (limpio de mora e historial)
+    ]
 
+    for valor, dias, historial in casos_riesgo:
+        riesgo = evaluar_riesgo_tributario(valor, dias, historial)
+        print(f"  ${valor:9,} / {dias:3} días mora / Historial: {str(historial):5} → RIESGO: {riesgo}")
 
 def menu_ciclos_for():
     """Sección 6: ciclos for."""
